@@ -1,12 +1,12 @@
 import auth from '#auth/addon.js';
 
-const DAY = 24 * 60 * 60 * 1000;
-
-const LIFETIMES = {
-	'Session': 14 * DAY
-};
-
 auth.Fn('token.expiry', function(type)
 {
-	return new Date(Date.now() + (LIFETIMES[type] ? LIFETIMES[type] : DAY));
+	const day = 24 * 60 * 60 * 1000;
+
+	const lifetimes = {
+		'Session': 14 * day
+	};
+
+	return new Date(Date.now() + (lifetimes[type] ? lifetimes[type] : day));
 });
