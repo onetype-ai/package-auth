@@ -1,0 +1,15 @@
+{
+	"type": "package",
+	"slug": "onetype/auth",
+	"name": "Auth",
+	"version": "0.1.0",
+	"description": "Authentication for the platform. Local sessions over workspace users and tokens, with login, register and logout endpoints.",
+	"icon": "key",
+	"color": "rgba(251, 146, 60, 1)",
+	"core": ">=0.1.0",
+	"status": "enabled",
+	"depends": [],
+	"permissions": [],
+	"limits": {},
+	"config": {}
+}
