@@ -1,0 +1,16 @@
+{
+    "name": "@onetype/auth",
+    "version": "0.1.0",
+    "description": "Authentication for the OneType platform. Local sessions over workspace users and tokens.",
+    "type": "module",
+    "license": "MIT",
+    "author": "Dejan Tomic <hi@iamdejan.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/onetype-ai/package-auth.git"
+    },
+    "peerDependencies": {
+        "@onetype/framework": ">=2.0.0",
+        "@onetype/platform": ">=0.1.0"
+    }
+}
