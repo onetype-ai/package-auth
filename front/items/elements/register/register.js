@@ -17,9 +17,14 @@ elements.ItemAdd({
 	},
 	render: function()
 	{
-		this.success = () => window.location.reload();
+		this.success = async () =>
+		{
+			await $ot.ui.screens.close();
 
-		this.swap = () => $ot.ui.layouts.data({ auth_view: 'login' });
+			window.location.reload();
+		};
+
+		this.swap = () => $ot.ui.screens.open('auth.login');
 
 		return /* html */ `
 			<div class="box">
