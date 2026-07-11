@@ -14,39 +14,14 @@ commands.Item({
 		user: {
 			type: 'object',
 			required: true,
-			config: {
-				id: {
-					type: 'number',
-					description: 'Id of the user.'
-				},
-				name: {
-					type: 'string',
-					description: 'Display name of the user.'
-				},
-				email: {
-					type: 'string',
-					description: 'Email address of the user.'
-				},
-				is_verified: {
-					type: 'boolean',
-					description: 'Whether the email address is verified.'
-				},
-				team: {
-					type: 'object',
-					config: {
-						id: {
-							type: 'number',
-							description: 'Id of the team.'
-						},
-						name: {
-							type: 'string',
-							description: 'Name of the team.'
-						}
-					},
-					description: 'The team the user belongs to.'
-				}
-			},
-			description: 'The signed in user with their team.'
+			config: 'workspace.user',
+			description: 'The signed in user.'
+		},
+		team: {
+			type: 'object',
+			required: true,
+			config: 'workspace.team',
+			description: 'The team the user belongs to.'
 		}
 	},
 	callback: async function(properties, resolve)
@@ -65,6 +40,6 @@ commands.Item({
 			return resolve(null, 'Invalid or expired session.', 401);
 		}
 
-		resolve({ user: { ...session.user, team: session.team } });
+		resolve({ user: session.user, team: session.team });
 	}
 });
