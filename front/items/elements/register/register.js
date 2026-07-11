@@ -17,6 +17,8 @@ elements.ItemAdd({
 	},
 	render: function()
 	{
+		this.command = { response: null, error: null, loading: false };
+
 		this.success = async () =>
 		{
 			await $ot.ui.screens.close();
