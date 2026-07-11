@@ -8,6 +8,10 @@ import './functions/token/expiry.js';
 import './functions/token/revoke.js';
 import './functions/session.js';
 
+/* Pipelines */
+import './core/pipelines/login.js';
+import './core/pipelines/register.js';
+
 /* Commands */
 import './items/commands/login.js';
 import './items/commands/register.js';
