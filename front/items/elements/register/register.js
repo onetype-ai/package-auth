@@ -24,17 +24,17 @@ elements.ItemAdd({
 					<e-global-notice ot-if="command.error" title="Registration failed" :text="command.error" color="red"></e-global-notice>
 					<ot-command-submit command="auth:register" :api="true" :_success="success">
 						<div class="fields">
-							<e-core-field label="Name">
+							<e-core-field orientation="vertical" label="Name">
 								<div slot="input">
 									<e-form-input name="name" placeholder="Your full name" icon="person" :clearable="false"></e-form-input>
 								</div>
 							</e-core-field>
-							<e-core-field label="Email">
+							<e-core-field orientation="vertical" label="Email">
 								<div slot="input">
 									<e-form-input type="email" name="email" placeholder="you@company.com" icon="mail" :clearable="false"></e-form-input>
 								</div>
 							</e-core-field>
-							<e-core-field label="Password">
+							<e-core-field orientation="vertical" label="Password">
 								<div slot="input">
 									<e-form-input type="password" name="password" placeholder="Pick a strong password" icon="lock" :clearable="false"></e-form-input>
 								</div>

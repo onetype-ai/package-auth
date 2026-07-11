@@ -24,12 +24,12 @@ elements.ItemAdd({
 					<e-global-notice ot-if="command.error" title="Sign in failed" :text="command.error" color="red"></e-global-notice>
 					<ot-command-submit command="auth:login" :api="true" :_success="success">
 						<div class="fields">
-							<e-core-field label="Email">
+							<e-core-field orientation="vertical" label="Email">
 								<div slot="input">
 									<e-form-input type="email" name="email" placeholder="you@company.com" icon="mail" :clearable="false"></e-form-input>
 								</div>
 							</e-core-field>
-							<e-core-field label="Password">
+							<e-core-field orientation="vertical" label="Password">
 								<div slot="input">
 									<e-form-input type="password" name="password" placeholder="Your password" icon="lock" :clearable="false"></e-form-input>
 								</div>
