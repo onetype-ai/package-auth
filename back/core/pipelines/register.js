@@ -1,5 +1,4 @@
 import onetype from '@onetype/framework';
-import packages from '@onetype/platform/packages';
 import users from '@onetype/platform/workspace/users';
 import teams from '@onetype/platform/workspace/teams';
 import auth from '#auth/addon.js';
@@ -59,10 +58,7 @@ onetype.Pipeline('auth:register', {
 	description: 'Ensure the instance limits allow another team and user.',
 	callback: async function(properties, resolve)
 	{
-		const limits = {
-			teams: packages.Fn('limit', 'onetype/auth', 'teams'),
-			users: packages.Fn('limit', 'onetype/auth', 'users')
-		};
+		const limits = $ot.system.packages.limits('onetype/auth');
 
 		if(limits.teams !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= limits.teams)
 		{
