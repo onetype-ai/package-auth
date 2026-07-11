@@ -9,6 +9,13 @@ commands.Item({
 	endpoint: '/api/auth/me',
 	description: 'Returns the signed in user and their team, resolved from the session cookie or the authorization header.',
 	metadata: { addon: 'auth' },
+	condition: function()
+	{
+		if(!onetype.CookieGet('ot_session', this.http.request) && !this.http.request.headers.authorization)
+		{
+			return 'Not authenticated.';
+		}
+	},
 	in: {},
 	out: {
 		user: {
@@ -27,12 +34,6 @@ commands.Item({
 	callback: async function(properties, resolve)
 	{
 		const value = onetype.CookieGet('ot_session', this.http.request) || this.http.request.headers.authorization;
-
-		if(!value)
-		{
-			return resolve(null, 'Not authenticated.', 401);
-		}
-
 		const session = await auth.Fn('session', value);
 
 		if(!session)

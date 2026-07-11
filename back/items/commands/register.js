@@ -1,5 +1,7 @@
 import onetype from '@onetype/framework';
 import commands from '@onetype/framework/commands';
+import users from '@onetype/platform/workspace/users';
+import teams from '@onetype/platform/workspace/teams';
 
 commands.Item({
 	id: 'auth:register',
@@ -8,11 +10,23 @@ commands.Item({
 	endpoint: '/api/auth/register',
 	description: 'Creates a team and its first user through the auth:register pipeline, then signs the user in and sets the session cookie.',
 	metadata: { addon: 'auth' },
-	condition: function()
+	condition: async function()
 	{
-		if(!$ot.get('packages')['onetype/auth'].features.register)
+		const manifest = $ot.get('packages')['onetype/auth'];
+
+		if(!manifest.features.register)
 		{
 			return 'Registration is disabled on this instance.';
+		}
+
+		if(manifest.limits['teams:total'] !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['teams:total'])
+		{
+			return 'This instance has reached its team limit.';
+		}
+
+		if(manifest.limits['users:total'] !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['users:total'])
+		{
+			return 'This instance has reached its user limit.';
 		}
 	},
 	in: {
@@ -36,35 +50,13 @@ commands.Item({
 		user: {
 			type: 'object',
 			required: true,
-			config: {
-				id: {
-					type: 'number',
-					description: 'Id of the created user.'
-				},
-				name: {
-					type: 'string',
-					description: 'Display name of the created user.'
-				},
-				email: {
-					type: 'string',
-					description: 'Email address of the created user.'
-				}
-			},
+			config: 'workspace.user',
 			description: 'The created user.'
 		},
 		team: {
 			type: 'object',
 			required: true,
-			config: {
-				id: {
-					type: 'number',
-					description: 'Id of the created team.'
-				},
-				name: {
-					type: 'string',
-					description: 'Name of the created team.'
-				}
-			},
+			config: 'workspace.team',
 			description: 'The created team.'
 		}
 	},
@@ -104,16 +96,6 @@ commands.Item({
 
 		onetype.CookieSet('ot_session', result.data.token, { path: '/', maxAge: Math.floor((result.data.expiry - Date.now()) / 1000), sameSite: 'Lax' }, this.http.response);
 
-		resolve({
-			user: {
-				id: result.data.user.id,
-				name: result.data.user.name,
-				email: result.data.user.email
-			},
-			team: {
-				id: result.data.team.id,
-				name: result.data.team.name
-			}
-		}, 'Welcome to OneType, ' + result.data.user.name + '.');
+		resolve({ user: result.data.user, team: result.data.team }, 'Welcome to OneType, ' + result.data.user.name + '.');
 	}
 });
