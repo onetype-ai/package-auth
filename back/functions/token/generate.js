@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import tokens from '@onetype/platform/workspace/tokens';
 import auth from '#auth/addon.js';
 
-auth.Fn('token.generate', async function(user, team, type = 'Access', ip = '', agent = '')
+auth.Fn('token.generate', async function(user, team, type = 'Session', ip = '', agent = '')
 {
 	const item = tokens.Item({
 		user_id: user,

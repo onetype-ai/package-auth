@@ -12,7 +12,7 @@ auth.Fn('session', async function(value)
 		return null;
 	}
 
-	const token = await tokens.Find().filter('token', secret).filter('id', id).filter('type', ['Session', 'API'], 'IN').one();
+	const token = await tokens.Find().filter('token', secret).filter('id', id).filter('type', 'Session').one();
 
 	if(!token || new Date(token.Get('expires_at')) < new Date())
 	{

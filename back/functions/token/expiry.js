@@ -1,16 +1,9 @@
 import auth from '#auth/addon.js';
 
-const HOUR = 60 * 60 * 1000;
-const DAY = 24 * HOUR;
+const DAY = 24 * 60 * 60 * 1000;
 
 const LIFETIMES = {
-	'Session': 14 * DAY,
-	'Access': HOUR,
-	'Refresh': 30 * DAY,
-	'API': 365 * DAY,
-	'Invite': 7 * DAY,
-	'Reset': DAY,
-	'Verify': DAY
+	'Session': 14 * DAY
 };
 
 auth.Fn('token.expiry', function(type)
