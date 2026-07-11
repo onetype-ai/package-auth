@@ -63,6 +63,11 @@ commands.Item({
 	},
 	callback: async function(properties, resolve)
 	{
+		if(!$ot.get('packages')['onetype/auth'].features.register)
+		{
+			return resolve(null, 'Registration is disabled on this instance.', 403);
+		}
+
 		if(!onetype.ValidateEmail(properties.email))
 		{
 			return resolve(null, 'Please provide a valid email address.', 400);
