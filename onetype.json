@@ -15,5 +15,8 @@
 		"users": 1,
 		"projects": 1
 	},
+	"features": {
+		"register": true
+	},
 	"config": {}
 }
