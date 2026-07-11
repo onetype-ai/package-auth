@@ -60,12 +60,12 @@ onetype.Pipeline('auth:register', {
 	{
 		const limits = $ot.system.packages.limits('onetype/auth');
 
-		if(limits.teams !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= limits.teams)
+		if(limits['teams:total'] !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= limits['teams:total'])
 		{
 			return resolve(null, 'This instance has reached its team limit.', 400);
 		}
 
-		if(limits.users !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= limits.users)
+		if(limits['users:total'] !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= limits['users:total'])
 		{
 			return resolve(null, 'This instance has reached its user limit.', 400);
 		}
