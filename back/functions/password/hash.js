@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { promisify } from 'util';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 const scrypt = promisify(crypto.scrypt);
 

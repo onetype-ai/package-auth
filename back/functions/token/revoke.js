@@ -1,5 +1,5 @@
 import tokens from '@onetype/platform/workspace/tokens';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 auth.Fn('token.revoke', async function(value, type = 'Session')
 {

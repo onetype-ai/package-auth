@@ -1,4 +1,4 @@
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 const HOUR = 60 * 60 * 1000;
 const DAY = 24 * HOUR;

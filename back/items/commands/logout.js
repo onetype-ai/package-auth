@@ -1,6 +1,6 @@
 import onetype from '@onetype/framework';
 import commands from '@onetype/framework/commands';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 commands.Item({
 	id: 'auth:logout',

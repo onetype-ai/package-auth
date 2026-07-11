@@ -9,6 +9,9 @@
         "type": "git",
         "url": "https://github.com/onetype-ai/package-auth.git"
     },
+    "imports": {
+        "#auth/*": "./back/*"
+    },
     "peerDependencies": {
         "@onetype/framework": ">=2.0.0",
         "@onetype/platform": ">=0.1.0"

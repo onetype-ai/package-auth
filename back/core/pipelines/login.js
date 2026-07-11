@@ -1,6 +1,6 @@
 import onetype from '@onetype/framework';
 import users from '@onetype/platform/workspace/users';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 onetype.Pipeline('auth:login', {
 	description: 'Sign a user in: verify the credentials and issue a session token.',

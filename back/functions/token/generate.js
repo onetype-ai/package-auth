@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import tokens from '@onetype/platform/workspace/tokens';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 auth.Fn('token.generate', async function(user, team, type = 'Access', ip = '', agent = '')
 {

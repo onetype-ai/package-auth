@@ -1,7 +1,7 @@
 import onetype from '@onetype/framework';
 import users from '@onetype/platform/workspace/users';
 import teams from '@onetype/platform/workspace/teams';
-import auth from '../../addon.js';
+import auth from '#auth/addon.js';
 
 onetype.Pipeline('auth:register', {
 	description: 'Create a team and its first user, then issue a session token.',

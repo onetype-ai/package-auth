@@ -1,7 +1,7 @@
 import tokens from '@onetype/platform/workspace/tokens';
 import users from '@onetype/platform/workspace/users';
 import teams from '@onetype/platform/workspace/teams';
-import auth from '../addon.js';
+import auth from '#auth/addon.js';
 
 auth.Fn('session', async function(value)
 {

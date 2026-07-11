@@ -1,5 +1,5 @@
 import onetype from '@onetype/framework';
-import auth from '../addon.js';
+import auth from '#auth/addon.js';
 
 onetype.MiddlewareIntercept('servers.http.request', async (middleware) =>
 {
