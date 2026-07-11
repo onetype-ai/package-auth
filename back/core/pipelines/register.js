@@ -1,4 +1,5 @@
 import onetype from '@onetype/framework';
+import packages from '@onetype/platform/packages';
 import users from '@onetype/platform/workspace/users';
 import teams from '@onetype/platform/workspace/teams';
 import auth from '#auth/addon.js';
@@ -50,6 +51,27 @@ onetype.Pipeline('auth:register', {
 			type: 'number',
 			required: true,
 			description: 'Unix timestamp in milliseconds when the session expires.'
+		}
+	}
+})
+
+.Join('limits', 5, {
+	description: 'Ensure the instance limits allow another team and user.',
+	callback: async function(properties, resolve)
+	{
+		const limits = {
+			teams: packages.Fn('limit', 'onetype/auth', 'teams'),
+			users: packages.Fn('limit', 'onetype/auth', 'users')
+		};
+
+		if(limits.teams !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= limits.teams)
+		{
+			return resolve(null, 'This instance has reached its team limit.', 400);
+		}
+
+		if(limits.users !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= limits.users)
+		{
+			return resolve(null, 'This instance has reached its user limit.', 400);
 		}
 	}
 })
