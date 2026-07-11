@@ -33,11 +33,13 @@ onetype.Pipeline('auth:register', {
 	out: {
 		user: {
 			type: 'object',
-			description: 'The created user item.'
+			config: 'workspace.user',
+			description: 'The created user.'
 		},
 		team: {
 			type: 'object',
-			description: 'The created team item.'
+			config: 'workspace.team',
+			description: 'The created team.'
 		},
 		token: {
 			type: 'string',
@@ -68,7 +70,8 @@ onetype.Pipeline('auth:register', {
 	out: {
 		team: {
 			type: 'object',
-			description: 'Created team item.'
+			config: 'workspace.team',
+			description: 'The created team.'
 		}
 	},
 	callback: async function({ name })
@@ -77,7 +80,7 @@ onetype.Pipeline('auth:register', {
 
 		await team.Create();
 
-		return { team };
+		return { team: team.Get(['id', 'name', 'description']) };
 	}
 })
 
@@ -87,13 +90,14 @@ onetype.Pipeline('auth:register', {
 	out: {
 		user: {
 			type: 'object',
-			description: 'Created user item.'
+			config: 'workspace.user',
+			description: 'The created user.'
 		}
 	},
 	callback: async function({ name, email, password, team })
 	{
 		const user = users.Item({
-			team_id: team.Get('id'),
+			team_id: team.id,
 			name: name.trim(),
 			email: email,
 			password: await auth.Fn('password.hash', password)
@@ -101,7 +105,7 @@ onetype.Pipeline('auth:register', {
 
 		await user.Create();
 
-		return { user };
+		return { user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']) };
 	}
 })
 
@@ -120,7 +124,7 @@ onetype.Pipeline('auth:register', {
 	},
 	callback: async function({ user, team, ip, agent })
 	{
-		const token = await auth.Fn('token.generate', user.Get('id'), team.Get('id'), 'Session', ip, agent);
+		const token = await auth.Fn('token.generate', user.id, team.id, 'Session', ip, agent);
 
 		return {
 			token: token.Get('token') + ':' + token.Get('id'),

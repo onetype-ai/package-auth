@@ -99,14 +99,14 @@ commands.Item({
 
 		resolve({
 			user: {
-				id: result.data.user.Get('id'),
-				name: result.data.user.Get('name'),
-				email: result.data.user.Get('email')
+				id: result.data.user.id,
+				name: result.data.user.name,
+				email: result.data.user.email
 			},
 			team: {
-				id: result.data.team.Get('id'),
-				name: result.data.team.Get('name')
+				id: result.data.team.id,
+				name: result.data.team.name
 			}
-		}, 'Welcome to OneType, ' + result.data.user.Get('name') + '.');
+		}, 'Welcome to OneType, ' + result.data.user.name + '.');
 	}
 });

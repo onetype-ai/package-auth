@@ -55,6 +55,6 @@ commands.Item({
 
 		onetype.CookieSet('ot_session', result.data.token, { path: '/', maxAge: Math.floor((result.data.expiry - Date.now()) / 1000), sameSite: 'Lax' }, this.http.response);
 
-		resolve({ token: result.data.token, expiry: result.data.expiry }, 'Welcome back, ' + result.data.user.Get('name') + '.');
+		resolve({ token: result.data.token, expiry: result.data.expiry }, 'Welcome back, ' + result.data.user.name + '.');
 	}
 });

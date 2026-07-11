@@ -37,7 +37,8 @@ onetype.Pipeline('auth:login', {
 		},
 		user: {
 			type: 'object',
-			description: 'The signed in user item.'
+			config: 'workspace.user',
+			description: 'The signed in user.'
 		}
 	}
 })
@@ -47,7 +48,8 @@ onetype.Pipeline('auth:login', {
 	out: {
 		user: {
 			type: 'object',
-			description: 'Resolved user item.'
+			config: 'workspace.user',
+			description: 'The signed in user.'
 		}
 	},
 	callback: async function({ email, password }, resolve)
@@ -59,7 +61,7 @@ onetype.Pipeline('auth:login', {
 			return resolve(null, 'Invalid email or password.', 400);
 		}
 
-		return { user };
+		return { user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']) };
 	}
 })
 
@@ -78,7 +80,7 @@ onetype.Pipeline('auth:login', {
 	},
 	callback: async function({ user, ip, agent })
 	{
-		const token = await auth.Fn('token.generate', user.Get('id'), user.Get('team_id'), 'Session', ip, agent);
+		const token = await auth.Fn('token.generate', user.id, user.team_id, 'Session', ip, agent);
 
 		return {
 			token: token.Get('token') + ':' + token.Get('id'),
