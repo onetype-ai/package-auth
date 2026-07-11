@@ -7,7 +7,14 @@ elements.ItemAdd({
 	collection: 'Home',
 	author: 'OneType',
 	metadata: { addon: 'auth' },
-	config: {},
+	config: {
+		background: {
+			type: 'number',
+			value: 1,
+			options: [1, 2, 3],
+			description: 'Background depth of the card from 1 to 3.'
+		}
+	},
 	render: function()
 	{
 		this.success = () => window.location.reload();
@@ -16,7 +23,7 @@ elements.ItemAdd({
 
 		return /* html */ `
 			<div class="box">
-				<div class="card">
+				<div :class="'card bg-' + background">
 					<div class="head">
 						<h1>Welcome back</h1>
 						<p>Sign in to your workspace.</p>
