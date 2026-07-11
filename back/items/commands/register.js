@@ -8,6 +8,13 @@ commands.Item({
 	endpoint: '/api/auth/register',
 	description: 'Creates a team and its first user through the auth:register pipeline, then signs the user in and sets the session cookie.',
 	metadata: { addon: 'auth' },
+	condition: function()
+	{
+		if(!$ot.get('packages')['onetype/auth'].features.register)
+		{
+			return 'Registration is disabled on this instance.';
+		}
+	},
 	in: {
 		name: {
 			type: 'string',
@@ -63,11 +70,6 @@ commands.Item({
 	},
 	callback: async function(properties, resolve)
 	{
-		if(!$ot.get('packages')['onetype/auth'].features.register)
-		{
-			return resolve(null, 'Registration is disabled on this instance.', 403);
-		}
-
 		if(!onetype.ValidateEmail(properties.email))
 		{
 			return resolve(null, 'Please provide a valid email address.', 400);
