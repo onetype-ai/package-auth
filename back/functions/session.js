@@ -28,16 +28,13 @@ auth.Fn('session', async function(value)
 
 	const team = await teams.Find().filter('id', user.Get('team_id')).filter('deleted_at', null, 'NULL').one();
 
+	if(!team)
+	{
+		return null;
+	}
+
 	return {
-		user: {
-			id: user.Get('id'),
-			name: user.Get('name'),
-			email: user.Get('email'),
-			is_verified: user.Get('is_verified')
-		},
-		team: team ? {
-			id: team.Get('id'),
-			name: team.Get('name')
-		} : null
+		user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']),
+		team: team.Get(['id', 'name', 'description'])
 	};
 });
