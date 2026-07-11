@@ -9,13 +9,6 @@ commands.Item({
 	endpoint: '/api/auth/me',
 	description: 'Returns the signed in user and their team, resolved from the session cookie or the authorization header.',
 	metadata: { addon: 'auth' },
-	condition: function()
-	{
-		if(!onetype.CookieGet('ot_session', this.http.request) && !this.http.request.headers.authorization)
-		{
-			return 'Not authenticated.';
-		}
-	},
 	in: {},
 	out: {
 		user: {
@@ -29,6 +22,13 @@ commands.Item({
 			required: true,
 			config: 'workspace.team',
 			description: 'The team the user belongs to.'
+		}
+	},
+	condition: function()
+	{
+		if(!onetype.CookieGet('ot_session', this.http.request) && !this.http.request.headers.authorization)
+		{
+			return 'Not authenticated.';
 		}
 	},
 	callback: async function(properties, resolve)

@@ -9,19 +9,19 @@ commands.Item({
 	endpoint: '/api/auth/logout',
 	description: 'Revokes the active session token and clears the session cookie.',
 	metadata: { addon: 'auth' },
-	condition: function()
-	{
-		if(!onetype.CookieGet('ot_session', this.http.request))
-		{
-			return 'Not signed in.';
-		}
-	},
 	in: {},
 	out: {
 		success: {
 			type: 'boolean',
 			required: true,
 			description: 'Whether a session was revoked.'
+		}
+	},
+	condition: function()
+	{
+		if(!onetype.CookieGet('ot_session', this.http.request))
+		{
+			return 'Not signed in.';
 		}
 	},
 	callback: async function(properties, resolve)

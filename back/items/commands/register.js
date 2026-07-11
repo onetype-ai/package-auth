@@ -10,25 +10,6 @@ commands.Item({
 	endpoint: '/api/auth/register',
 	description: 'Creates a team and its first user through the auth:register pipeline, then signs the user in and sets the session cookie.',
 	metadata: { addon: 'auth' },
-	condition: async function()
-	{
-		const manifest = $ot.get('packages')['onetype/auth'];
-
-		if(!manifest.features.register)
-		{
-			return 'Registration is disabled on this instance.';
-		}
-
-		if(manifest.limits['teams:total'] !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['teams:total'])
-		{
-			return 'This instance has reached its team limit.';
-		}
-
-		if(manifest.limits['users:total'] !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['users:total'])
-		{
-			return 'This instance has reached its user limit.';
-		}
-	},
 	in: {
 		name: {
 			type: 'string',
@@ -58,6 +39,25 @@ commands.Item({
 			required: true,
 			config: 'workspace.team',
 			description: 'The created team.'
+		}
+	},
+	condition: async function()
+	{
+		const manifest = $ot.get('packages')['onetype/auth'];
+
+		if(!manifest.features.register)
+		{
+			return 'Registration is disabled on this instance.';
+		}
+
+		if(manifest.limits['teams:total'] !== null && await teams.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['teams:total'])
+		{
+			return 'This instance has reached its team limit.';
+		}
+
+		if(manifest.limits['users:total'] !== null && await users.Find().filter('deleted_at', null, 'NULL').count() >= manifest.limits['users:total'])
+		{
+			return 'This instance has reached its user limit.';
 		}
 	},
 	callback: async function(properties, resolve)
