@@ -7,7 +7,7 @@ commands.Item({
 	exposed: true,
 	method: 'GET',
 	endpoint: '/api/auth/me',
-	description: 'Returns the signed in user and their team, resolved from the session cookie or the authorization header.',
+	description: 'Returns the signed in user, resolved from the session cookie or the authorization header.',
 	metadata: { addon: 'auth' },
 	in: {},
 	out: {
@@ -16,12 +16,6 @@ commands.Item({
 			required: true,
 			config: 'workspace.user',
 			description: 'The signed in user.'
-		},
-		team: {
-			type: 'object',
-			required: true,
-			config: 'workspace.team',
-			description: 'The team the user belongs to.'
 		}
 	},
 	condition: function()
@@ -41,6 +35,6 @@ commands.Item({
 			return resolve(null, 'Invalid or expired session.', 401);
 		}
 
-		resolve({ user: session.user, team: session.team });
+		resolve({ user: session.user });
 	}
 });

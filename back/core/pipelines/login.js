@@ -61,7 +61,7 @@ onetype.Pipeline('auth:login', {
 			return resolve(null, 'Invalid email or password.', 400);
 		}
 
-		return { user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']) };
+		return { user: user.Get(['id', 'name', 'email', 'is_verified']) };
 	}
 })
 
@@ -80,7 +80,7 @@ onetype.Pipeline('auth:login', {
 	},
 	callback: async function({ user, ip, agent })
 	{
-		const token = await auth.Fn('token.generate', user.id, user.team_id, 'Session', ip, agent);
+		const token = await auth.Fn('token.generate', user.id, 'Session', ip, agent);
 
 		return {
 			token: token.Get('token') + ':' + token.Get('id'),

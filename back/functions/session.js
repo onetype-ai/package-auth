@@ -1,6 +1,5 @@
 import tokens from '@onetype/platform/workspace/tokens';
 import users from '@onetype/platform/workspace/users';
-import teams from '@onetype/platform/workspace/teams';
 import auth from '#auth/addon.js';
 
 auth.Fn('session', async function(value)
@@ -26,15 +25,7 @@ auth.Fn('session', async function(value)
 		return null;
 	}
 
-	const team = await teams.Find().filter('id', user.Get('team_id')).filter('deleted_at', null, 'NULL').one();
-
-	if(!team)
-	{
-		return null;
-	}
-
 	return {
-		user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']),
-		team: team.Get(['id', 'name', 'description'])
+		user: user.Get(['id', 'name', 'email', 'is_verified'])
 	};
 });

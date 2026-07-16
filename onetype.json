@@ -11,9 +11,7 @@
 	"depends": [],
 	"permissions": [],
 	"limits": {
-		"teams:total": 1,
-		"users:total": 1,
-		"projects:total": 1
+		"users:total": 1
 	},
 	"features": {
 		"register": true

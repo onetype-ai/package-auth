@@ -1,10 +1,9 @@
 import onetype from '@onetype/framework';
 import users from '@onetype/platform/workspace/users';
-import teams from '@onetype/platform/workspace/teams';
 import auth from '#auth/addon.js';
 
 onetype.Pipeline('auth:register', {
-	description: 'Create a team and its first user, then issue a session token.',
+	description: 'Create a user, then issue a session token.',
 	in: {
 		name: {
 			type: 'string',
@@ -36,11 +35,6 @@ onetype.Pipeline('auth:register', {
 			config: 'workspace.user',
 			description: 'The created user.'
 		},
-		team: {
-			type: 'object',
-			config: 'workspace.team',
-			description: 'The created team.'
-		},
 		token: {
 			type: 'string',
 			required: true,
@@ -65,28 +59,8 @@ onetype.Pipeline('auth:register', {
 	}
 })
 
-.Join('team', 20, {
-	description: 'Create the team the user will belong to.',
-	out: {
-		team: {
-			type: 'object',
-			config: 'workspace.team',
-			description: 'The created team.'
-		}
-	},
-	callback: async function({ name })
-	{
-		const team = teams.Item({ name: name.trim().split(' ')[0] + "'s Team" });
-
-		await team.Create();
-
-		return { team: team.Get(['id', 'name', 'description']) };
-	}
-})
-
-.Join('user', 30, {
+.Join('user', 20, {
 	description: 'Create the user with the hashed password.',
-	requires: ['team'],
 	out: {
 		user: {
 			type: 'object',
@@ -94,10 +68,9 @@ onetype.Pipeline('auth:register', {
 			description: 'The created user.'
 		}
 	},
-	callback: async function({ name, email, password, team })
+	callback: async function({ name, email, password })
 	{
 		const user = users.Item({
-			team_id: team.id,
 			name: name.trim(),
 			email: email,
 			password: await auth.Fn('password.hash', password)
@@ -105,13 +78,13 @@ onetype.Pipeline('auth:register', {
 
 		await user.Create();
 
-		return { user: user.Get(['id', 'team_id', 'name', 'email', 'is_verified']) };
+		return { user: user.Get(['id', 'name', 'email', 'is_verified']) };
 	}
 })
 
-.Join('session', 40, {
+.Join('session', 30, {
 	description: 'Issue a session token for the new user.',
-	requires: ['user', 'team'],
+	requires: ['user'],
 	out: {
 		token: {
 			type: 'string',
@@ -122,9 +95,9 @@ onetype.Pipeline('auth:register', {
 			description: 'Unix timestamp in milliseconds when the session expires.'
 		}
 	},
-	callback: async function({ user, team, ip, agent })
+	callback: async function({ user, ip, agent })
 	{
-		const token = await auth.Fn('token.generate', user.id, team.id, 'Session', ip, agent);
+		const token = await auth.Fn('token.generate', user.id, 'Session', ip, agent);
 
 		return {
 			token: token.Get('token') + ':' + token.Get('id'),

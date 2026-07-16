@@ -22,7 +22,7 @@ onetype.MiddlewareIntercept('servers.http.request', async (middleware) =>
 
 	if(session)
 	{
-		http.state.user = { ...session.user, team: session.team };
+		http.state.user = session.user;
 	}
 
 	await middleware.next();
