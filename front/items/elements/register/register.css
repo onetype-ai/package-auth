@@ -12,8 +12,10 @@
 .e-561166d2 > .box
 {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: var(--ot-spacing-l);
 	width: 100%;
 	height: 100%;
 	padding: var(--ot-spacing-l);
@@ -34,6 +36,7 @@
 	background: var(--fill);
 }
 
+.e-561166d2 > .box > .card.bg-0 { --fill: transparent; --line: transparent; }
 .e-561166d2 > .box > .card.bg-1 { --fill: var(--ot-bg-1); --line: var(--ot-bg-1-border); }
 .e-561166d2 > .box > .card.bg-2 { --fill: var(--ot-bg-2); --line: var(--ot-bg-2-border); }
 .e-561166d2 > .box > .card.bg-3 { --fill: var(--ot-bg-3); --line: var(--ot-bg-3-border); }

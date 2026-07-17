@@ -11,32 +11,48 @@ elements.ItemAdd({
 		background: {
 			type: 'number',
 			value: 1,
-			options: [1, 2, 3],
-			description: 'Background depth of the card from 1 to 3.'
+			options: [0, 1, 2, 3],
+			description: 'Background depth of the card from 1 to 3. 0 renders transparent, without background or borders.'
 		}
 	},
 	render: function()
 	{
-		this.command = { response: null, error: null, loading: false };
+		this.error = null;
+		this.loading = false;
 
-		this.success = async () =>
+		this.submit = async (data) =>
 		{
+			if(this.loading)
+			{
+				return false;
+			}
+
+			this.loading = true;
+			this.error = null;
+
+			const { message, code } = await $ot.command('auth:register', data);
+
+			this.loading = false;
+
+			if(code !== 200)
+			{
+				this.error = message;
+
+				return false;
+			}
+
 			await $ot.ui.screens.close();
 
-			window.location.reload();
+			return false;
 		};
-
-		this.swap = () => $ot.ui.screens.open('auth.login');
 
 		return /* html */ `
 			<div class="box">
 				<div :class="'card bg-' + background">
-					<div class="head">
-						<h1>Create your account</h1>
-						<p>One account for the whole workspace.</p>
-					</div>
-					<e-global-notice ot-if="command.error" title="Registration failed" :text="command.error" color="red"></e-global-notice>
-					<ot-command-submit command="auth:register" :api="true" :_success="success">
+					<e-global-heading title="Create your account" description="One account for the whole workspace."></e-global-heading>
+					<e-global-notice ot-if="error" title="Registration failed" :text="error" color="red"></e-global-notice>
+
+					<ot-form :_submit="submit">
 						<div class="fields">
 							<e-core-field orientation="vertical" label="Name">
 								<div slot="input">
@@ -53,12 +69,12 @@ elements.ItemAdd({
 									<e-form-input type="password" name="password" placeholder="Pick a strong password" icon="lock" :clearable="false"></e-form-input>
 								</div>
 							</e-core-field>
-							<e-form-button type="submit" text="Create account" icon="person_add" :loading="command.loading" #style="width: 100%"></e-form-button>
+							<e-form-button type="submit" text="Create account" icon="person_add" :loading="loading" #style="width: 100%"></e-form-button>
 						</div>
-					</ot-command-submit>
+					</ot-form>
 					<div class="foot">
 						<span>Already have an account?</span>
-						<a ot-click="() => swap()">Sign in</a>
+						<a href="/auth/login">Sign in</a>
 					</div>
 				</div>
 			</div>
