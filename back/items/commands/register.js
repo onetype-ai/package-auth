@@ -1,6 +1,6 @@
 import onetype from '@onetype/framework';
 import commands from '@onetype/framework/commands';
-import users from '@onetype/platform/workspace/users';
+import users from '@onetype/platform/users';
 
 commands.Item({
 	id: 'auth:register',

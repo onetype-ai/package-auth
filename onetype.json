@@ -9,6 +9,7 @@
 	"core": ">=0.1.0",
 	"status": "enabled",
 	"depends": [],
+	"runtimes": [],
 	"permissions": [],
 	"limits": {
 		"users:total": 1
