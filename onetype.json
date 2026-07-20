@@ -1,5 +1,4 @@
 {
-	"type": "package",
 	"slug": "onetype/auth",
 	"name": "Auth",
 	"version": "0.1.0",
@@ -7,7 +6,7 @@
 	"icon": "key",
 	"color": "rgba(251, 146, 60, 1)",
 	"core": ">=0.1.0",
-	"status": "enabled",
+	"status": "disabled",
 	"depends": [],
 	"runtimes": [],
 	"permissions": [],
