@@ -1,4 +1,3 @@
-import onetype from '@onetype/framework';
 import users from '@onetype/platform/users';
 import auth from '#auth/addon.js';
 
