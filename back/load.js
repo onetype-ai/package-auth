@@ -9,8 +9,8 @@ import './functions/token/revoke.js';
 import './functions/session.js';
 
 /* Pipelines */
-import './core/pipelines/login.js';
-import './core/pipelines/register.js';
+import './_/pipelines/login.js';
+import './_/pipelines/register.js';
 
 /* Commands */
 import './items/commands/login.js';
