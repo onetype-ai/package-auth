@@ -11,7 +11,7 @@
 		"onetype/elements",
 		"onetype/admin"
 	],
-	"runtimes": [],
+	"runtimes": ["*"],
 	"permissions": [],
 	"limits": {
 		"users:total": 1
