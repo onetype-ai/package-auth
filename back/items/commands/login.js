@@ -1,4 +1,5 @@
 import commands from '@onetype/framework/commands';
+import auth from '#auth/addon.js';
 
 commands.Item({
 	id: 'auth:login',
@@ -40,7 +41,7 @@ commands.Item({
 
 		const request = this.http.request;
 
-		const result = await onetype.PipelineRun('auth:login', {
+		const result = await auth.Pipeline('login', {
 			email: properties.email,
 			password: properties.password,
 			ip: request.socket.remoteAddress || '',

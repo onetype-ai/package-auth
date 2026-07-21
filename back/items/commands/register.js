@@ -1,5 +1,6 @@
 import commands from '@onetype/framework/commands';
 import users from '@onetype/platform/users';
+import auth from '#auth/addon.js';
 
 commands.Item({
 	id: 'auth:register',
@@ -68,7 +69,7 @@ commands.Item({
 
 		const request = this.http.request;
 
-		const result = await onetype.PipelineRun('auth:register', {
+		const result = await auth.Pipeline('register', {
 			name: properties.name,
 			email: properties.email,
 			password: properties.password,

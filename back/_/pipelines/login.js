@@ -1,7 +1,8 @@
 import users from '@onetype/platform/users';
 import auth from '#auth/addon.js';
 
-onetype.Pipeline('auth:login', {
+auth.PipelineAdd({
+	id: 'login',
 	description: 'Sign a user in: verify the credentials and issue a session token.',
 	in: {
 		email: {
@@ -42,7 +43,7 @@ onetype.Pipeline('auth:login', {
 	}
 })
 
-.Join('user', 10, {
+.Join('user', {
 	description: 'Find the user by email and verify the password against the stored hash.',
 	out: {
 		user: {
@@ -64,7 +65,7 @@ onetype.Pipeline('auth:login', {
 	}
 })
 
-.Join('session', 20, {
+.Join('session', {
 	description: 'Issue a session token for the user.',
 	requires: ['user'],
 	out: {

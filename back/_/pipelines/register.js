@@ -1,7 +1,8 @@
 import users from '@onetype/platform/users';
 import auth from '#auth/addon.js';
 
-onetype.Pipeline('auth:register', {
+auth.PipelineAdd({
+	id: 'register',
 	description: 'Create a user, then issue a session token.',
 	in: {
 		name: {
@@ -47,7 +48,7 @@ onetype.Pipeline('auth:register', {
 	}
 })
 
-.Join('guard', 10, {
+.Join('guard', {
 	description: 'Ensure no user exists with the email.',
 	callback: async function({ email }, resolve)
 	{
@@ -58,7 +59,7 @@ onetype.Pipeline('auth:register', {
 	}
 })
 
-.Join('user', 20, {
+.Join('user', {
 	description: 'Create the user with the hashed password.',
 	out: {
 		user: {
@@ -81,7 +82,7 @@ onetype.Pipeline('auth:register', {
 	}
 })
 
-.Join('session', 30, {
+.Join('session', {
 	description: 'Issue a session token for the new user.',
 	requires: ['user'],
 	out: {
