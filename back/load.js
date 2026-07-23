@@ -9,8 +9,8 @@ import './functions/token/revoke.js';
 import './functions/session.js';
 
 /* Pipelines */
-import './_/pipelines/login.js';
-import './_/pipelines/register.js';
+import './items/pipelines/login.js';
+import './items/pipelines/register.js';
 
 /* Commands */
 import './items/commands/login.js';
@@ -19,6 +19,6 @@ import './items/commands/logout.js';
 import './items/commands/me.js';
 
 /* Listeners */
-import './listeners/http.js';
+import './listeners/middlewares/servers.http.request.js';
 
 export default auth;

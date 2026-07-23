@@ -6,14 +6,14 @@ const scrypt = promisify(crypto.scrypt);
 
 auth.Fn('password.verify', async function(password, stored)
 {
-	const [salt, hash] = String(stored).split(':');
+    const [salt, hash] = String(stored).split(':');
 
-	if(!salt || !hash)
-	{
-		return false;
-	}
+    if(!salt || !hash)
+    {
+        return false;
+    }
 
-	const candidate = await scrypt(password, salt, 64);
+    const candidate = await scrypt(password, salt, 64);
 
-	return crypto.timingSafeEqual(candidate, Buffer.from(hash, 'hex'));
+    return crypto.timingSafeEqual(candidate, Buffer.from(hash, 'hex'));
 });
